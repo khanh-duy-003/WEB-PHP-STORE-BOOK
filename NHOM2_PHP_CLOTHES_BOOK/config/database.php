@@ -5,10 +5,11 @@ $capsule = new Capsule;
 
 $capsule->addConnection([
     'driver' => 'mysql',
-    'host' => 'localhost',
-    'database' => 'nguyenthanhan_2121110226',
+    'host' => 'crossover.proxy.rlwy.net',
+	'port' = 13776;
+    'database' => 'railway',
     'username' => 'root',
-    'password' => '',
+    'password' => 'UeWdNnfPmhWmgzYlArlkZSsaWTLJuLwp',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix' => '2121110226_',
