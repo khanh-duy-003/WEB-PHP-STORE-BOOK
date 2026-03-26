@@ -8,4 +8,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-echo "APP START"; die();
+echo "STEP 1<br>";
+
+require 'vendor/autoload.php';
+
+echo "STEP 2<br>";
+
+require 'config/database.php';
+
+echo "STEP 3<br>";
