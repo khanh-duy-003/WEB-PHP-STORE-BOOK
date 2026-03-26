@@ -8,3 +8,5 @@ RUN a2enmod rewrite
 
 # Set quyền
 RUN chown -R www-data:www-data /var/www/html
+
+RUN composer install
