@@ -4,7 +4,10 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
-    git
+    git \
+    libzip-dev
+
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Cài composer
 RUN curl -sS https://getcomposer.org/installer | php \
