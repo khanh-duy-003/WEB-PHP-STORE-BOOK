@@ -6,7 +6,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver' => 'mysql',
     'host' => 'crossover.proxy.rlwy.net',
-	'port' = 13776;
+	'port' = 13776,
     'database' => 'railway',
     'username' => 'root',
     'password' => 'UeWdNnfPmhWmgzYlArlkZSsaWTLJuLwp',
