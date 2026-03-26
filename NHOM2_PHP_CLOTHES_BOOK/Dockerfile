@@ -16,5 +16,9 @@ COPY . /var/www/html/
 # Bật rewrite
 RUN a2enmod rewrite
 
+# Cài dependency (QUAN TRỌNG)
+WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader
+
 # Set quyền
 RUN chown -R www-data:www-data /var/www/html
