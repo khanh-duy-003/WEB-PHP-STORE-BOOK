@@ -1,6 +1,6 @@
 {
-    "name": "nguyenthanhan/shop-thoi-trang",
-    "description": "Xay dung website ban hang - Thay Loi day",
+    "name": "NHOM2_PHP_STORE-CLOTHES",
+    "description": "Website Store Clothes",
     "autoload": {
         "psr-4": {
             "App\\":"application/"
