@@ -2,7 +2,7 @@
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["REGISTER"])) {
-    $servername = "localhost";
+    $servername = "127.0.0.1:3307";
     $username = "root";
     $password = "";
     $database = "fashion_shop";

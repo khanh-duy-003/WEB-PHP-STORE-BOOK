@@ -5,7 +5,7 @@ $phone = $_POST['phone'];
 $title = $_POST['title'];
 $content = $_POST['content'];
 
-$conn = new mysqli('localhost', 'root', '', 'nguyenthanhan_2121110226');
+$conn = new mysqli('127.0.0.1:3307', 'root', '', 'nguyenthanhan_2121110226');
 
 if ($conn->connect_error) {
     die('Connection Failed: ' . $conn->connect_error);

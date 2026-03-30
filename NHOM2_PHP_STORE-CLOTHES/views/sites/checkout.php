@@ -10,7 +10,7 @@ if (isset($_SESSION['contentcart'])) {
 <?php
 
 $order_id = 1;
-$servername = "localhost";
+$servername = "127.0.0.1:3307";
 $username = "root";
 $password = "";
 $dbname = "nguyenthanhan_2121110226";

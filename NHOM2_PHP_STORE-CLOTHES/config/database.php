@@ -5,9 +5,10 @@ $capsule = new Capsule;
 
 $capsule->addConnection([
     'driver' => 'mysql',
-    'host' => 'localhost',
+    'host' => '127.0.0.1',
     'database' => 'fashion_shop',
     'username' => 'root',
+    'port' => 3307,
     'password' => '',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',

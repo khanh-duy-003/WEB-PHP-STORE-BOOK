@@ -5,7 +5,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deliveryaddress = isset($_POST['deliveryaddress']) ? $_POST['deliveryaddress'] : '';
     $deliveryemail = isset($_POST['deliveryemail']) ? $_POST['deliveryemail'] : '';
     $created_at = date('Y-m-d H:i:s');
-    $conn = new mysqli('localhost', 'root', '', 'nguyenthanhan_2121110226');
+    $servername = '127.0.0.1:3307';
+    $username = 'root';
+    $password = '';
+    $database = 'nguyenthanhan_2121110226';
+    $conn = new mysqli($servername, $username, $password, $database);
 
     if ($conn->connect_error) {
         die('Connection Failed: ' . $conn->connect_error);
