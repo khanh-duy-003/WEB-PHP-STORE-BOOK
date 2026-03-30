@@ -44,7 +44,7 @@ use node_modules\bootstrap\dist\js\bootstrap;
       $username=$_POST['username'];
       $password = $_POST['password'];
 
-      // $password=sha1($_POST['password']);
+      $password=sha1($_POST['password']);
       $args=[
           ['status','=',1],
           ['roles','=',1],

@@ -18,7 +18,7 @@
             <h3 class="widgettilte">MẠNG XÃ HỘI</h3>
             <div class="social my-3">
                <div class="facebook-icon">
-                  <a href="https://www.facebook.com/ngtha1302">
+                  <a href="https://dangkykhoahoc.iuh.edu.vn/">
                      <i class="fab fa-facebook-f"></i>
                   </a>
                </div>
@@ -33,7 +33,7 @@
                   </a>
                </div>
                <div class="youtube-icon">
-                  <a href="https://www.youtube.com/hashtag/dienloi">
+                  <a href="https://dangkykhoahoc.iuh.edu.vn/">
                      <i class="fab fa-youtube"></i>
                   </a>
                </div>
@@ -63,7 +63,7 @@
 </section>
 <section class="dhl-copyright bg-dark py-3">
    <div class="container text-center text-white">
-      Thiết kế bởi: Nguyễn Thành An
+      Thiết kế bởi: Nhóm 2
    </div>
 </section>
 </body>
