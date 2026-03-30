@@ -1,5 +1,5 @@
 {
-    "name": "NHOM2_PHP_STORE-CLOTHES",
+    "name": "nhom2/php-store-clothes",
     "description": "Website Store Clothes",
     "autoload": {
         "psr-4": {

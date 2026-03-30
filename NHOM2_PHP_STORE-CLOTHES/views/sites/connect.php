@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["REGISTER"])) {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "nguyenthanhan_2121110226";
+    $database = "fashion_shop";
 
     $conn = new mysqli($servername, $username, $password, $database);
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["REGISTER"])) {
 
     $status = 1;
 
-    $stmt = $conn->prepare("INSERT INTO `2121110226_user` (name, username, email, password, phone, address, gender, image, created_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `user` (name, username, email, password, phone, address, gender, image, created_by, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssisii", $name, $username, $email, $hashed_password, $phone, $address, $gender, $image, $createdBy, $status);
 
     if ($stmt->execute()) {

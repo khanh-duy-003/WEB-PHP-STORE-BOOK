@@ -7,10 +7,13 @@
               Thời trang đủ thể loại
             </p>
             <p class="pt-1">
-               Địa chỉ: B216A, KP Bình Phước, Phường Bình Nhâm, TP. Thuận An, Bình Dương
+               Địa chỉ: 12 Nguyễn Văn Bảo, Hạnh Thông, Hồ Chí Minh
             </p>
             <p class="pt-1">
-               Điện thoại: 0342264038(call, zalo) - Email: nguyenthanhan130203@gmail.com
+               Điện thoại: 0919123456(call, zalo)
+            </p>
+            <p class="pt-1">
+               Email: nhom2DHCN@gmail.com
             </p>
             <h3 class="widgettilte">MẠNG XÃ HỘI</h3>
             <div class="social my-3">

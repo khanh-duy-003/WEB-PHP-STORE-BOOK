@@ -78,7 +78,7 @@ if (isset($_SESSION['contentcart'])) {
                      <li class="nav-item">
                         <a class="nav-link" href="#">
                            <i class="fa fa-phone-square" aria-hidden="true"></i>
-                           0342264038
+                           0919123456
                         </a>
                      </li>
                      <?php if (isset($_SESSION['logincustomer'])) : ?>

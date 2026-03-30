@@ -1,6 +1,3 @@
-
-
-
 <?php
 use App\Models\User;
 if (isset($_POST['DANGNHAP']))
@@ -9,33 +6,27 @@ if (isset($_POST['DANGNHAP']))
     $username=$_POST['username'];
     $password=sha1($_POST['password']);
     $args=null;
+    $user = null;
    
-    if(filter_var($username, FILTER_VALIDATE_EMAIL))
-    {
-        $args=[
-            ['email','=',$username],
-            ['password','=',$password],
-            ['status','=',1],
-        ];
-    }else
-    {
-        $args=[
-            ['username','=',$username],
-            ['password','=',$password],
-            ['status','=',1],
-        ];
+    if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        $user = User::where('email', $username)
+                    ->where('status', 1)
+                    ->first();
+    } else {
+        $user = User::where('username', $username)
+                    ->where('status', 1)
+                    ->first();
     }
-    $user=User::where($args)->first();
-    if($user!=null)
-{
-    $_SESSION['logincustomer']=$username;
-    $_SESSION['user_id']=$user->id;
-    $message_alert="Đăng nhập thành công";
-    header("Location: index.php");
-    exit();
-}else{
-    $message_alert="Tài khoản không chính xác";
-}
+
+    if ($user && password_verify($_POST['password'], $user->password)) {
+        $_SESSION['logincustomer'] = $username;
+        $_SESSION['user_id'] = $user->id;
+
+        header("Location: index.php");
+        exit();
+    } else {
+        $message_alert = "Tài khoản hoặc mật khẩu không đúng";
+    }
 }
 
 

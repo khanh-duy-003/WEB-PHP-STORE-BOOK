@@ -6,12 +6,11 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver' => 'mysql',
     'host' => 'localhost',
-    'database' => 'nguyenthanhan_2121110226',
+    'database' => 'fashion_shop',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
-    'prefix' => '2121110226_',
 ]);
 
 // Set the event dispatcher used by Eloquent models... (optional)
