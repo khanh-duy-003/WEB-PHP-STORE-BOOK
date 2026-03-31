@@ -2,6 +2,7 @@
 
 use App\Libraries\MyClass;
 use App\Models\Brand;
+
 session_start();
 
 // var_dump($list);
@@ -36,43 +37,48 @@ use node_modules\bootstrap\dist\js\bootstrap;
 <div class="container">
     <div class="row justify-content-center">
         <?php
-    require_once ('../vendor/autoload.php');
-    require_once ('../config/database.php');
-    use App\Models\User;
-    $error = '';
-    if(isset($_POST['DANGNHAP'])){
-      $username=$_POST['username'];
-      $password = $_POST['password'];
+        require_once('../vendor/autoload.php');
+        require_once('../config/database.php');
 
-      $password=sha1($_POST['password']);
-      $args=[
-          ['status','=',1],
-          ['roles','=',1],
-          ['password','=',$password],
-      ];
-      if(!filter_var($username,FILTER_VALIDATE_EMAIL)){
-        array_push($args,['username','=',$username]);
-      }else{
-        array_push($args,['email','=',$username]);
-      }
-      $user=User::where($args)->first();
-      if($user!=null){
+        use App\Models\User;
 
-        $_SESSION['useradmin']=$user->username;
-        $_SESSION['fullname']=$user->name;
-        $_SESSION['userid']=$user->id;
-        header('location:index.php?opt=category');
+        $error = '';
+        if (isset($_POST['DANGNHAP'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
 
-      }else{
-        $error="<div class='text-danger'>Tài khoản không chính xác</div>";
-      }
-    }
-    ?>
+            $password = sha1($_POST['password']);
+            $args = [
+                ['status', '=', 1],
+                ['roles', '=', 1],
+                ['password', '=', $password],
+            ];
+            if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                array_push($args, ['username', '=', $username]);
+            } else {
+                array_push($args, ['email', '=', $username]);
+            }
+            $user = User::where($args)->first();
+            if ($user != null) {
+                $_SESSION['userid']   = $user->id;
+                $_SESSION['fullname'] = $user->name;
+                $_SESSION['email']    = $user->email;
+                $_SESSION['phone']    = $user->phone;
+                $_SESSION['address']  = $user->address;
+                $_SESSION['useradmin'] = $user->username;
+
+                header('location:index.php?opt=category');
+                exit();
+            } else {
+                $error = "<div class='text-danger'>Tài khoản không chính xác</div>";
+            }
+        }
+        ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title d-flex justify-content-center">Đăng nhập</h1>
-                    <?=$error?>
+                    <?= $error ?>
                 </div>
                 <div class="card-body">
                     <form method="post" action="">
