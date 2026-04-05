@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
@@ -11,10 +12,18 @@ $total_revenue = Orderdetail::sum(\Illuminate\Database\Capsule\Manager::raw('qty
 
 $recent_orders = Order::orderBy('created_at', 'DESC')->limit(5)->get();
 
+// Truy vấn Top 5 sản phẩm bán chạy nhất
+$best_sellers = Product::join('orderdetail', 'product.id', '=', 'orderdetail.product_id')
+   ->selectRaw('product.*, SUM(orderdetail.qty) as total_sold')
+   ->where('product.status', '=', 1)
+   ->groupBy('product.id')
+   ->orderBy('total_sold', 'DESC')
+   ->take(5) // Lấy 5 sản phẩm để bằng với chiều cao của bảng bên trái
+   ->get();
+
 require_once "../views/admin/header.php";
 ?>
-   
-<!--CONTENT  -->
+
 <div class="content">
    <section class="content-header my-2">
       <h1 class="d-inline">Bảng điều khiển hệ thống (Thống kê)</h1>
@@ -101,63 +110,117 @@ require_once "../views/admin/header.php";
       </div>
 
       <div class="row mt-4">
-         <div class="col-md-12">
+
+         <div class="col-lg-6 col-md-12 mb-4">
             <div class="card shadow-sm border-0">
-            <div class="card-header bg-white py-3">
-               <h5 class="mb-0"><i class="fas fa-history me-2 text-primary"></i> Các đơn hàng mới nhất</h5>
-            </div>
-            <div class="card-body p-0">
-               <div class="table-responsive">
-                  <table class="table table-hover align-middle mb-0">
-                     <thead class="table-light">
-                        <tr>
-                           <th class="px-3" style="width: 80px;">ID</th>
-                           <th>Khách hàng</th>
-                           <th>Số điện thoại</th>
-                           <th>Ngày đặt</th>
-                           <th class="text-center">Trạng thái</th>
-                           <th class="text-center">Hành động</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <?php foreach($recent_orders as $order): ?>
-                        <tr>
-                           <td class="px-3">#<?= $order->id ?></td>
-                           <td class="fw-bold"><?= $order->deliveryname ?: '#' ?></td>
-                           <td><?= $order->deliveryphone ?: '#' ?></td>
-                           <td><?= date('d/m/Y H:i', strtotime($order->created_at)) ?></td>
-                           <td class="text-center">
-                              <?php 
-                                 switch($order->status) {
-                                    case 1: echo '<span class="badge bg-info">Mới</span>'; break;
-                                    case 2: echo '<span class="badge bg-primary">Xác nhận</span>'; break;
-                                    case 3: echo '<span class="badge bg-warning text-dark">Giao hàng</span>'; break;
-                                    case 4: echo '<span class="badge bg-success">Hoàn thành</span>'; break;
-                                    case 0: echo '<span class="badge bg-danger">Hủy</span>'; break;
-                                    default: echo '<span class="badge bg-secondary">#</span>'; break;
-                                 }
-                              ?>
-                           </td>
-                           <td class="text-center">
-                              <a href="index.php?opt=order&cat=show&id=<?= $order->id ?>" class="btn btn-sm btn-outline-info" title="Xem chi tiết">
-                                 <i class="fas fa-eye"></i> Chi tiết
-                              </a>
-                           </td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <?php if (count($recent_orders) == 0): ?>
+               <div class="card-header bg-white py-3">
+                  <h5 class="mb-0"><i class="fas fa-history me-2 text-primary"></i> Các đơn hàng mới nhất</h5>
+               </div>
+               <div class="card-body p-0">
+                  <div class="table-responsive">
+                     <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
                            <tr>
-                              <td colspan="6" class="text-center py-3">Chưa có đơn hàng nào.</td>
+                              <th class="px-3" style="width: 80px;">ID</th>
+                              <th>Khách hàng</th>
+                              <th>Số điện thoại</th>
+                              <th>Ngày đặt</th>
+                              <th class="text-center">Trạng thái</th>
+                              <th class="text-center">Hành động</th>
                            </tr>
-                        <?php endif; ?>
-                     </tbody>
-                  </table>
+                        </thead>
+                        <tbody>
+                           <?php foreach ($recent_orders as $order): ?>
+                              <tr>
+                                 <td class="px-3">#<?= $order->id ?></td>
+                                 <td class="fw-bold"><?= $order->deliveryname ?: '#' ?></td>
+                                 <td><?= $order->deliveryphone ?: '#' ?></td>
+                                 <td><?= date('d/m/Y H:i', strtotime($order->created_at)) ?></td>
+                                 <td class="text-center">
+                                    <?php
+                                    switch ($order->status) {
+                                       case 1:
+                                          echo '<span class="badge bg-info">Mới</span>';
+                                          break;
+                                       case 2:
+                                          echo '<span class="badge bg-primary">Xác nhận</span>';
+                                          break;
+                                       case 3:
+                                          echo '<span class="badge bg-warning text-dark">Giao hàng</span>';
+                                          break;
+                                       case 4:
+                                          echo '<span class="badge bg-success">Hoàn thành</span>';
+                                          break;
+                                       case 0:
+                                          echo '<span class="badge bg-danger">Hủy</span>';
+                                          break;
+                                       default:
+                                          echo '<span class="badge bg-secondary">#</span>';
+                                          break;
+                                    }
+                                    ?>
+                                 </td>
+                                 <td class="text-center">
+                                    <a href="index.php?opt=order&cat=show&id=<?= $order->id ?>" class="btn btn-sm btn-outline-info" title="Xem chi tiết">
+                                       <i class="fas fa-eye"></i> Chi tiết
+                                    </a>
+                                 </td>
+                              </tr>
+                           <?php endforeach; ?>
+                           <?php if (count($recent_orders) == 0): ?>
+                              <tr>
+                                 <td colspan="6" class="text-center py-3">Chưa có đơn hàng nào.</td>
+                              </tr>
+                           <?php endif; ?>
+                        </tbody>
+                     </table>
+                  </div>
                </div>
             </div>
          </div>
-      </div>
 
+         <div class="col-lg-6 col-md-12 mb-4">
+            <div class="card shadow-sm border-0">
+               <div class="card-header bg-white py-3">
+                  <h5 class="mb-0"><i class="fas fa-fire me-2 text-danger"></i> Top Bán Chạy</h5>
+               </div>
+               <div class="card-body p-0">
+                  <div class="table-responsive">
+                     <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                           <tr>
+                              <th class="px-3">Hình</th>
+                              <th>Tên SP</th>
+                              <th class="text-center">Đã bán</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <?php foreach ($best_sellers as $item): ?>
+                              <tr>
+                                 <td class="px-3">
+                                    <img src="../public/images/product/<?= $item->image ?>" alt="<?= $item->name ?>" class="img-thumbnail" style="width: 45px; height: 45px; object-fit: cover; border-radius: 5px;">
+                                 </td>
+                                 <td class="fw-bold text-truncate" style="max-width: 200px;" title="<?= $item->name ?>">
+                                    <?= $item->name ?>
+                                 </td>
+                                 <td class="text-center text-danger fw-bold fs-5">
+                                    <?= $item->total_sold ?>
+                                 </td>
+                              </tr>
+                           <?php endforeach; ?>
+                           <?php if (count($best_sellers) == 0): ?>
+                              <tr>
+                                 <td colspan="3" class="text-center py-3">Chưa có dữ liệu.</td>
+                              </tr>
+                           <?php endif; ?>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
    </section>
 </div>
-<!--END CONTENT-->
 <?php require_once "../views/admin/footer.php"; ?>
