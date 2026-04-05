@@ -108,19 +108,19 @@ $product_list = Product::where([
                                 <img class="img-fluid w-100" src="public/images/product/<?= $product->image; ?>" alt="Product Image" onclick="changeimage(src)" />
                             </div>
                             <?php if (!empty($product->image1)) : ?>
-                            <div class="col-2">
-                                <img class="img-fluid w-100" src="public/images/product/<?= $product->image1; ?>" alt="Product Image" onclick="changeimage(src)" />
-                            </div>
+                                <div class="col-2">
+                                    <img class="img-fluid w-100" src="public/images/product/<?= $product->image1; ?>" alt="Product Image" onclick="changeimage(src)" />
+                                </div>
                             <?php endif; ?>
                             <?php if (!empty($product->image2)) : ?>
-                            <div class="col-2">
-                                <img class="img-fluid w-100" src="public/images/product/<?= $product->image2; ?>" alt="Product Image" onclick="changeimage(src)" />
-                            </div>
+                                <div class="col-2">
+                                    <img class="img-fluid w-100" src="public/images/product/<?= $product->image2; ?>" alt="Product Image" onclick="changeimage(src)" />
+                                </div>
                             <?php endif; ?>
                             <?php if (!empty($product->image3)) : ?>
-                            <div class="col-2">
-                                <img class="img-fluid w-100" src="public/images/product/<?= $product->image3; ?>" alt="Product Image" onclick="changeimage(src)" />
-                            </div>
+                                <div class="col-2">
+                                    <img class="img-fluid w-100" src="public/images/product/<?= $product->image3; ?>" alt="Product Image" onclick="changeimage(src)" />
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -130,8 +130,8 @@ $product_list = Product::where([
                         document.getElementById("productimage").src = src;
                     }
                 </script>
-                
-                <div class="col-md-6" >
+
+                <div class="col-md-6">
                     <h1 class="fs-2"><?= $product->name ?></h1>
                     <b class="fs-2"><?= $product->metadesc; ?></b>
                     <div style="display: flex; align-items: center;">
@@ -233,7 +233,24 @@ $product_list = Product::where([
                             border-color: #FFA500;
                         }
                     </style>
-                    <a style="margin-left: 150px; height:30px; width:150px;border-radius: 0;" href="index.php?opt=cart&addcat=<?= $product->id; ?>&qty=1" class="btn btn-sm btn-outline-orange my-2">Thêm vào giỏ </a>
+
+                    <a style="margin-left: 150px; height:30px; width:150px; border-radius: 0; cursor: pointer;"
+                        onclick="addToCart(<?= $product->id; ?>)"
+                        class="btn btn-sm btn-outline-orange my-2">Thêm vào giỏ</a>
+
+                    <script>
+                        function addToCart(productId) {
+                            // Lấy con số thực tế đang nằm trong ô nhập số lượng
+                            var quantity = document.getElementById('qty').value;
+
+                            if (quantity > 0) {
+                                // Nối biến quantity vào link và tự động chuyển trang
+                                window.location.href = "index.php?opt=cart&addcat=" + productId + "&quantity=" + quantity;
+                            } else {
+                                alert("Vui lòng chọn số lượng hợp lệ!");
+                            }
+                        }
+                    </script>
                     <div class="col-md-6">
 
                         <style>

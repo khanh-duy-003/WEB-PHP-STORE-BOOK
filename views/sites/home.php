@@ -26,7 +26,7 @@ if (isset($_POST['keyword'])) {
          echo '<div class="row product-list">';
          foreach ($results as $product) {
 ?>
-            <div class="product-item border" style="width: 230px; margin-left:50px; margin-bottom:20px ;" >
+            <div class="product-item border" style="width: 230px; margin-left:50px; margin-bottom:20px ;">
                <div class="product-item-image">
                   <a href="index.php?opt=product&slug=<?= $product->slug; ?>">
                      <img src="public/images/product/<?= $product->image; ?>" class="img-fluid" alt="" id="img1">
@@ -36,7 +36,7 @@ if (isset($_POST['keyword'])) {
                <h2 class="product-item-name text-main text-center fs-5 py-1">
                   <div class="text-center" style="color:black;" href="index.php?opt=product&slug=<?= $product->slug; ?>"><?= $product->name; ?></div>
                </h2>
-               <h3 class="product-item-price fs-6 p-2 d-flex justify-content-center" >
+               <h3 class="product-item-price fs-6 p-2 d-flex justify-content-center">
                   <div>
                      <?php
                      if ($product->pricesale < $product->price) {
@@ -87,13 +87,58 @@ if (isset($_POST['keyword'])) {
 <section class="hdl-maincontent">
    <div class="container">
 
+      <div class="bestseller-section mb-5 mt-4">
+         <div class="category-title bg-danger rounded mb-3 shadow-sm">
+            <h2 class="fs-4 py-2 text-center text-uppercase text-white mb-0">
+               <i class="fas fa-fire me-2"></i> Sản Phẩm Bán Chạy Nhất <i class="fas fa-fire ms-2"></i>
+            </h2>
+         </div>
+         <div class="row product-list">
+            <?php
+            // Lệnh truy vấn cực xịn: Kết nối bảng product và orderdetail
+            // Gom nhóm theo ID sản phẩm và tính TỔNG số lượng đã bán (SUM(orderdetail.qty))
+            $list_best_sellers = Product::join('orderdetail', 'product.id', '=', 'orderdetail.product_id')
+               ->selectRaw('product.*, SUM(orderdetail.qty) as total_sold')
+               ->where('product.status', '=', 1)
+               ->groupBy('product.id')
+               ->orderBy('total_sold', 'DESC') // Sắp xếp giảm dần theo tổng số lượng bán
+               ->take(8) // Lấy ra Top 8 sản phẩm
+               ->get();
+            ?>
+
+            <?php foreach ($list_best_sellers as $product) : ?>
+               <div class="col-6 col-md-3 mb-4">
+                  <?php require('views/sites/product_item.php'); ?>
+               </div>
+            <?php endforeach; ?>
+         </div>
+
+         <div class="text-center mb-4">
+            <style>
+               .btn-bestseller {
+                  border: 2px solid #dc3545;
+                  color: #dc3545;
+                  font-weight: bold;
+                  transition: all 0.3s;
+               }
+
+               .btn-bestseller:hover {
+                  background-color: #dc3545;
+                  color: white;
+                  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+               }
+            </style>
+            <a href="index.php?opt=product" class="btn btn-bestseller rounded-pill px-5 py-2">
+               Xem tất cả sản phẩm
+            </a>
+         </div>
+      </div>
       <?php foreach ($list_category as  $row_cat) : ?>
          <?php require "views/sites/product_category_home.php"; ?>
-
       <?php endforeach; ?>
+
    </div>
 </section>
 
 <?php require_once "views/sites/mod_lastpost.php"; ?>
-
 <?php require_once "footer.php"; ?>
