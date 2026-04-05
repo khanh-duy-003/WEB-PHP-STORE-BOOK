@@ -233,18 +233,7 @@ $product_list = Product::where([
                             border-color: #FFA500;
                         }
                     </style>
-                    <a onclick="addToCartAndCheckout1(<?= $product->id; ?>)" style="margin-left: 150px; hight:30px; width:150px;border-radius: 0;" href="index.php?opt=cart&addcat=<?= $product->id; ?> " class="btn btn-sm btn-outline-orange my-2">Thêm vào giỏ </a>
-                    <script>
-                        function addToCartAndCheckout1(productId) {
-                            var quantity = document.getElementById('qty').value;
-
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("GET", "index.php?opt=cart&addcat=" + productId + "&quantity=" + quantity, true);
-
-
-                            xhr.send();
-                        }
-                    </script>
+                    <a style="margin-left: 150px; height:30px; width:150px;border-radius: 0;" href="index.php?opt=cart&addcat=<?= $product->id; ?>&qty=1" class="btn btn-sm btn-outline-orange my-2">Thêm vào giỏ </a>
                     <div class="col-md-6">
 
                         <style>
